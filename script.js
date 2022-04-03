@@ -15,38 +15,77 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
   
     // Add a variable "pet_info" equal to a object with the name (string), weight (number), and happiness (number) of your pet
     var pet_info = {name:"Grogu", weight:"10", happiness:"5"};
+    var clicked = "";
   
     function clickedTreatButton() {
-      alert(pet_info.name + " eat he must.");
       // Increase pet happiness
       pet_info.happiness++;
       // Increase pet weight
       pet_info.weight++;
+      clicked = "treat";
       checkAndUpdatePetInfoInHtml();
     }
     
     function clickedPlayButton() {
-      alert(pet_info.name + " loves to play");
       // Increase pet happiness
       pet_info.happiness++; 
       // Decrease pet weight
       pet_info.weight--;
+      clicked = "play";
       checkAndUpdatePetInfoInHtml();
     }
     
     function clickedExerciseButton() {
       // Decrease pet happiness
+      pet_info.happiness--;
       // Decrease pet weight
+      pet_info.weight--;
+      clicked = "exercise";
       checkAndUpdatePetInfoInHtml();
     }
   
     function checkAndUpdatePetInfoInHtml() {
+      updatePetImageInHTML();
       checkWeightAndHappinessBeforeUpdating();  
       updatePetInfoInHtml();
+    }
+
+    function updatePetImageInHTML() {
+
+      let sound = new Audio;
+
+      switch(clicked) {
+        case "treat":
+          $('.pet-image').attr("src", "assets/images/eat.webp");
+          sound.src = "assets/sound/burp.mp3";
+          sound.play();
+          alert("Grogu is hungry. Give him chicken nuggets and he will be happy!");
+          break;
+        case "play":
+          $('.pet-image').attr("src", "assets/images/play.gif");
+          sound.src = "assets/sound/play.mp3";
+          sound.play();
+          alert("Grogu must play with you. What a great day!");
+          break;
+        case "exercise":
+          $('.pet-image').attr("src", "assets/images/exercise.webp");
+          sound.src = "assets/sound/exercise.mp3";
+          sound.play();
+          alert("Grogu must learn to use the force. This is the way!");
+          break;
+      }
     }
     
     function checkWeightAndHappinessBeforeUpdating() {
       // Add conditional so if weight is lower than zero, set it back to zero
+      if (pet_info['weight'] < 0) {
+        pet_info['weight'] = 0;
+      }
+      // Add conditional so if happiness is lower than zero, set it back to zero
+      if (pet_info['happiness'] < 0) {
+        pet_info['happiness'] = 0;
+      }
+
     }
     
     // Updates your HTML with the current values in your pet_info object
